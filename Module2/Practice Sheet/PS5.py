@@ -1,3 +1,5 @@
+# String Methods
+
 text = "  Hello Python World!  "
 
 print(text.upper())           # HELLO PYTHON WORLD!
