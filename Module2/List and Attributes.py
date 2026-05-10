@@ -9,3 +9,10 @@ Attributes:
 * insert
 * extend
 """
+
+a = [1,3.98, "Suman"]
+a.append("BATMAN")
+a.insert(3, "Bruce")
+a.extend(["dog", "cat", 2034.343])
+
+print(a)
