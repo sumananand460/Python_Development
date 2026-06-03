@@ -1,0 +1,46 @@
+{% extends 'attendance/base.html' %}
+{% block content %}
+<h2 class="mb-3">Student Dashboard</h2>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-4"><div class="card stat-card"><div class="card-body"><div class="text-muted">Attendance %</div><div class="h3">{{ stats.percentage }}%</div></div></div></div>
+  <div class="col-md-4"><div class="card stat-card"><div class="card-body"><div class="text-muted">Total Present</div><div class="h3 text-success">{{ stats.present }}</div></div></div></div>
+  <div class="col-md-4"><div class="card stat-card"><div class="card-body"><div class="text-muted">Total Absent</div><div class="h3 text-danger">{{ stats.absent }}</div></div></div></div>
+</div>
+
+<div class="row g-3">
+  <div class="col-lg-6">
+    <div class="card"><div class="card-body">
+      <h5>Important Notices</h5>
+      {% for notice in important_notices %}
+        <div class="notice-important mb-2"><strong>{{ notice.title }}</strong><br><small>{{ notice.description|truncatechars:120 }}</small></div>
+      {% empty %}<p class="text-muted">No important notices.</p>{% endfor %}
+    </div></div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card"><div class="card-body">
+      <h5>Recent Notices</h5>
+      {% for notice in recent_notices %}<div>{{ notice.title }}</div>{% empty %}<p class="text-muted">No notices.</p>{% endfor %}
+    </div></div>
+  </div>
+</div>
+
+<div class="row g-3 mt-1">
+  <div class="col-lg-6">
+    <div class="card"><div class="card-body">
+      <h5>Attendance History</h5>
+      {% for record in attendance_history %}
+        <div>{{ record.date }} - {{ record.status }}</div>
+      {% empty %}<p class="text-muted">No records found.</p>{% endfor %}
+    </div></div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card"><div class="card-body">
+      <h5>This Month</h5>
+      {% for record in monthly_history %}
+        <div>{{ record.date }} - {{ record.status }}</div>
+      {% empty %}<p class="text-muted">No records for this month.</p>{% endfor %}
+    </div></div>
+  </div>
+</div>
+{% endblock %}

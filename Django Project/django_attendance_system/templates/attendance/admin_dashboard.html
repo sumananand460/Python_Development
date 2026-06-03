@@ -1,0 +1,61 @@
+{% extends 'attendance/base.html' %}
+{% block content %}
+<h2 class="mb-3">Admin Dashboard</h2>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-3"><div class="card stat-card"><div class="card-body"><div class="text-muted">Total Students</div><div class="h3">{{ total_students }}</div></div></div></div>
+  <div class="col-md-3"><div class="card stat-card"><div class="card-body"><div class="text-muted">Present Today</div><div class="h3 text-success">{{ present_today }}</div></div></div></div>
+  <div class="col-md-3"><div class="card stat-card"><div class="card-body"><div class="text-muted">Absent Today</div><div class="h3 text-danger">{{ absent_today }}</div></div></div></div>
+  <div class="col-md-3"><div class="card stat-card"><div class="card-body"><div class="text-muted">Total Classes</div><div class="h3">{{ total_classes }}</div></div></div></div>
+</div>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <h5>Monthly Attendance Trend</h5>
+    <canvas id="monthlyChart" height="100"></canvas>
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <h5>Important Notices</h5>
+        {% for notice in important_notices %}
+          <div class="notice-important mb-2">
+            <strong>{{ notice.title }}</strong><br>
+            <small>{{ notice.description|truncatechars:120 }}</small>
+          </div>
+        {% empty %}
+          <p class="text-muted mb-0">No important notices.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <h5>Recent Activity</h5>
+        <div class="mb-3">
+          <strong>Students</strong>
+          {% for s in recent_students %}<div>{{ s.full_name }}</div>{% empty %}<div class="text-muted">None</div>{% endfor %}
+        </div>
+        <div class="mb-3">
+          <strong>Notices</strong>
+          {% for n in recent_notices %}<div>{{ n.title }}</div>{% empty %}<div class="text-muted">None</div>{% endfor %}
+        </div>
+        <div>
+          <strong>Attendance Updates</strong>
+          {% for a in recent_updates %}<div>{{ a.student.full_name }} - {{ a.status }}</div>{% empty %}<div class="text-muted">None</div>{% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+window.__monthlyLabels = {{ monthly_labels|safe }};
+window.__monthlyValues = {{ monthly_values|safe }};
+</script>
+{% endblock %}
